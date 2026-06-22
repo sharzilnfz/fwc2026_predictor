@@ -3,10 +3,11 @@
 ## Knowledge
 
 ### Data & Domain
+
 - [Dataset: International football results from 1872 to 2026 — martj42 (Kaggle)](https://www.kaggle.com/datasets/martj42/international-football-results-from-1872-to-2017)
   49,000+ international match results with scores, venues, tournament type. **Primary training data.** Use for: building the match history dataframe, computing ELO ratings, and all rolling statistics.
 
-- [Dataset: FIFA World Cup 1930–2026: Ultimate ML Dataset (Kaggle)](https://www.kaggle.com/datasets/)
+- [Dataset: FIFA World Cup 1930–2026: Ultimate ML Dataset (Kaggle)](https://www.kaggle.com/datasets/nawfeelrahman1124444/the-ultimate-fifa-world-cup-dataset-1930-to-2026)
   Relational dataset with 12 files — group structures, head-to-head records, pedigree indices. Use for: World Cup-specific features, 2026 group draws, and tournament structure.
 
 - [Dataset: FIFA Rankings (Kaggle)](https://www.kaggle.com/)
@@ -16,6 +17,7 @@
   Official schedule, 48 teams in 12 groups, venue assignments. Use for: building the 2026 match schedule and simulation structure.
 
 ### ML/DL Fundamentals
+
 - [Course: Machine Learning Specialization — Andrew Ng (Coursera)](https://www.coursera.org/specializations/machine-learning-introduction)
   Gold-standard ML intro. Use for: understanding logistic regression, gradient descent, regularization, evaluation metrics. Watch Weeks 1-3 if unfamiliar.
 
@@ -32,6 +34,7 @@
   End-to-end ML/DL with scikit-learn, Keras, and TensorFlow. Use for: deep conceptual understanding of the full pipeline. Chapters 1-7 (ML) and 10-11 (Neural Nets) are most relevant.
 
 ### Football Analytics & Feature Engineering
+
 - [Paper: "Using ELO ratings for match result prediction" — Hvattum & Arntzen](https://ideas.repec.org/p/nms/nmsrif/3110.html)
   Foundational paper on ELO in football. Use for: understanding how to implement and tune ELO ratings for international matches.
 
@@ -45,6 +48,7 @@
   Practical walkthrough of building a football prediction system. Use for: end-to-end pipeline structure and common pitfalls.
 
 ### Tools & Libraries
+
 - [PyTorch Tutorials — Official](https://pytorch.org/tutorials/)
   Step-by-step PyTorch tutorials. Use for: building the neural network component (custom datasets, training loops, saving models).
 
@@ -58,6 +62,7 @@
   Hyperparameter optimization framework. Use for: tuning XGBoost/LightGBM and neural network hyperparameters.
 
 ### Evaluation & Calibration
+
 - [Article: "Brier Score — Measuring Probabilistic Prediction Quality"](https://en.wikipedia.org/wiki/Brier_score)
   Use for: understanding how to evaluate probability calibration (critical for Monte Carlo simulation).
 
