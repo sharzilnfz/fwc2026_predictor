@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ML Pipeline — Quick Reference</title>
+<style>
+  body { font-family: 'Georgia', serif; max-width: 700px; margin: 2rem auto; padding: 0 1rem; color: #222; line-height: 1.6; }
+  h1 { font-size: 1.5rem; border-bottom: 2px solid #333; padding-bottom: 0.5rem; }
+  h2 { font-size: 1.2rem; color: #444; margin-top: 2rem; }
+  .pipeline { background: #f5f5f0; padding: 1rem; margin: 1rem 0; font-family: 'Courier New', monospace; font-size: 0.85em; }
+  .card { border: 1px solid #ddd; border-radius: 4px; padding: 1rem; margin: 0.5rem 0; }
+  .card h3 { margin: 0 0 0.5rem 0; font-size: 1rem; }
+  .warning { background: #fff3e0; border-left: 3px solid #fb8c00; padding: 1rem; margin: 1rem 0; }
+  .tip { background: #e8f5e9; border-left: 3px solid #4caf50; padding: 1rem; margin: 1rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+  th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; font-size: 0.9em; }
+  th { background: #f5f5f0; }
+  code { background: #f5f5f0; padding: 0.2rem 0.4rem; font-size: 0.85em; }
+</style>
+</head>
+<body>
+
+<h1>ML Pipeline — Quick Reference</h1>
+
+<h2>End-to-End Pipeline</h2>
+<div class="pipeline">
+Raw Data → Clean → Feature Engineering → Train/Val/Test Split → Model Training → Evaluation → Prediction → Simulation → Dashboard
+</div>
+
+<h2>Data Split Strategy (Temporal)</h2>
+<table>
+  <tr><th>Set</th><th>Date Range</th><th>Purpose</th></tr>
+  <tr><td>Training</td><td>2000 – 2017</td><td>Fit model parameters</td></tr>
+  <tr><td>Validation</td><td>2018 – 2021</td><td>Tune hyperparameters, pick best model</td></tr>
+  <tr><td>Test (Backtest)</td><td>2022 World Cup</td><td>Final evaluation — only look once!</td></tr>
+  <tr><td>Production</td><td>2026 World Cup</td><td>Real predictions</td></tr>
+</table>
+
+<div class="warning">
+  <strong>⚠ Never use time-based shuffled splits.</strong> Future matches must never appear in training data. Always split by date.
+</div>
+
+<h2>Model Comparison Cheat Sheet</h2>
+
+<div class="card">
+  <h3>Logistic Regression (Baseline)</h3>
+  <strong>When:</strong> Always start here<br>
+  <strong>Pros:</strong> Interpretable, fast, hard to overfit<br>
+  <strong>Cons:</strong> Assumes linear decision boundaries<br>
+  <strong>Key params:</strong> <code>C</code> (regularization), <code>multi_class='multinomial'</code>
+</div>
+
+<div class="card">
+  <h3>XGBoost (Primary)</h3>
+  <strong>When:</strong> After LR baseline is established<br>
+  <strong>Pros:</strong> Handles non-linear patterns, feature importance, robust<br>
+  <strong>Cons:</strong> Can overfit with too many trees, harder to interpret<br>
+  <strong>Key params:</strong> <code>max_depth</code> (3-8), <code>learning_rate</code> (0.01-0.3), <code>n_estimators</code> (100-1000)
+</div>
+
+<div class="card">
+  <h3>Poisson Regression (Goal Prediction)</h3>
+  <strong>When:</strong> When you want scoreline predictions, not just W/D/L<br>
+  <strong>Pros:</strong> Principled for count data, gives scoreline probabilities<br>
+  <strong>Cons:</strong> Assumes goals are independent (they're not, quite)<br>
+  <strong>Key idea:</strong> Train 2 models (home goals, away goals), use scipy.stats.poisson to derive outcome probabilities
+</div>
+
+<div class="card">
+  <h3>Neural Network (Deep Learning)</h3>
+  <strong>When:</strong> After simpler models are working<br>
+  <strong>Pros:</strong> Captures complex non-linear patterns, portfolio showcase<br>
+  <strong>Cons:</strong> Needs more data, harder to debug, overfits easily on small datasets<br>
+  <strong>Key params:</strong> hidden dims, dropout (0.2-0.5), lr (0.001), batch size (32-128)
+</div>
+
+<h2>Evaluation Metrics</h2>
+<table>
+  <tr><th>Metric</th><th>What It Measures</th><th>Good Value</th></tr>
+  <tr><td>Accuracy</td><td>% of correct predictions</td><td>&gt;45% (3-class)</td></tr>
+  <tr><td>F1-score (macro)</td><td>Balance of precision/recall across classes</td><td>&gt;0.35</td></tr>
+  <tr><td>Log-loss</td><td>Quality of probability estimates (lower = better)</td><td>&lt;1.0</td></tr>
+  <tr><td>Brier score</td><td>Calibration of probabilities (lower = better)</td><td>&lt;0.25</td></tr>
+</table>
+
+<div class="tip">
+  <strong>💡 Why >45% is actually good:</strong> Random guessing on 3 classes = 33%. Most matches between similarly ranked teams are close to 50/50. Research papers typically achieve 45-55% on international football. Betting markets (with massive resources) achieve ~52-55%.
+</div>
+
+<h2>Common Pitfalls</h2>
+<ol>
+  <li><strong>Data leakage</strong>: Using future info in features (e.g., final tournament standings)</li>
+  <li><strong>Class imbalance</strong>: Draws are rarer (~25%) than wins — model may ignore them</li>
+  <li><strong>Overfitting to historical patterns</strong>: Football changes over time — 1990s data may mislead</li>
+  <li><strong>Uncalibrated probabilities</strong>: "70% win" should mean 70% of the time — test with calibration curve</li>
+  <li><strong>Ignoring the baseline</strong>: Always compare to "predict most common class" and to ELO-only model</li>
+</ol>
+
+</body>
+</html>
